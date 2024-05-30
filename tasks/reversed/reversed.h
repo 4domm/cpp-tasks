@@ -1,19 +1,23 @@
 #pragma once
 
-template <class Iterator>
-class IteratorRange {
+#include <iterator>
+
+template <typename Container>
+class Reversed {
 public:
-    IteratorRange(Iterator begin, Iterator end) : begin_(begin), end_(end) {
+    explicit Reversed(Container& container)
+        : container_(container), begin_(std::rbegin(container_)), end_(std::rend(container_)) {
     }
 
-    Iterator begin() const {  // NOLINT
+    auto begin() const {  // NOLINT
         return begin_;
     }
-
-    Iterator end() const {  // NOLINT
+    auto end() const {  // NOLINT
         return end_;
     }
 
 private:
-    Iterator begin_, end_;
+    Container& container_;
+    decltype(std::rbegin(container_)) begin_;
+    decltype(std::rend(container_)) end_;
 };
